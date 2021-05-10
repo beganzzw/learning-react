@@ -1,34 +1,31 @@
 import React, { Component } from 'react'
-import store from '../../redux/store'
-import {createIncrementAction,createDecrementAction,createIncrementAsyncAction} from '../../redux/count_action'
 export default class Count extends Component {
 
-    state = {count:0}
-    increment  = ()=>{
-        const {value} = this.selectNumber
-        store.dispatch(createIncrementAction(value*1))
+    state = { count: 0 }
+    increment = () => {
+        const { value } = this.selectNumber
+        this.props.increment(value * 1)
     }
-    decrement = ()=>{
-        const {value} = this.selectNumber
-        store.dispatch(createDecrementAction(value*1))
+    decrement = () => {
+        const { value } = this.selectNumber
+        this.props.decrement(value * 1)
     }
-    incrementIfOdd = ()=>{
-        const {value} = this.selectNumber
-        const count = store.getState()
-        console.log(count)
-        if (count % 2 !== 0){
-            store.dispatch(createIncrementAction(value*1))
+    incrementIfOdd = () => {
+        const { value } = this.selectNumber
+        if (this.props.count % 2 !== 0) {
+            this.props.increment(value * 1)
         }
+
     }
-    incrementAsync = ()=>{
-        const {value} = this.selectNumber
-        store.dispatch(createIncrementAsyncAction(value*1))
+    incrementAsync = () => {
+        const { value } = this.selectNumber
+        this.props.incrementAsync(value * 1,1000)
     }
     render() {
         return (
             <div>
-                <h1>当前求和为：{store.getState()}</h1>
-                <select ref={c=> this.selectNumber = c}>
+                <h1>当前求和为：{this.props.count}</h1>
+                <select ref={c => this.selectNumber = c}>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
