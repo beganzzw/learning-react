@@ -1,13 +1,5 @@
-import { connect } from 'react-redux'
-import {
-    createIncrementAction,
-    createDecrementAction, 
-    createIncrementAsyncAction
-} from '../../redux/actions/count'
 import React, { Component } from 'react'
-
-//定义UI组件
-class Count extends Component {
+export default class Count extends Component {
 
     state = { count: 0 }
     increment = () => {
@@ -27,13 +19,12 @@ class Count extends Component {
     }
     incrementAsync = () => {
         const { value } = this.selectNumber
-        this.props.incrementAsync(value * 1,500)
+        this.props.incrementAsync(value * 1,1000)
     }
     render() {
         return (
             <div>
-                <h4>当前求和为：{this.props.count}</h4>
-                <h4>当前人数为：{this.props.personObj.length}</h4>
+                <h1>当前求和为：{this.props.count}</h1>
                 <select ref={c => this.selectNumber = c}>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -48,28 +39,3 @@ class Count extends Component {
         )
     }
 }
-
-
-
-
-//优化
-export default  connect(
-    state =>({count:state.countReducer,personObj:state.personReducer}),
-    //一般写法
-    /* dispatch =>(
-        {
-            increment: number => dispatch(createIncrementAction(number)),
-            decrement: number => dispatch(createDecrementAction(number)),
-            incrementAsync: (number, time) => dispatch(createIncrementAsyncAction(number, time)),
-        }
-    )
-    */
-    //简写
-    {
-        increment: createIncrementAction,
-        decrement: createDecrementAction,
-        incrementAsync: createIncrementAsyncAction,
-    }
-)
-(Count)
-
